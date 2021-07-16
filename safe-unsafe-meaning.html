@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,7 +140,7 @@
                     <main>
                         <h1 id="safe与unsafe如何交互"><a class="header" href="#safe与unsafe如何交互">Safe与Unsafe如何交互</a></h1>
 <p>Safe Rust和Unsafe Rust之间有什么关系？它们是怎么交互的？</p>
-<p>Safe Rust和Unsafe Rust之间的边界是通过 <code>unsafe</code> 关键字明确界定的，就像接口一样，是一方通向另一方的唯一通道。因此我们可以说Safe Rust是安全的编程语言：所有不安全的部分都在 <code>unsafe</code> 边界以后。如果你想要的话，你可以在你的代码库中加入 <code>#![forbit(unsafe_code)]</code> 标注以静态方式（在编译期）保证你一直在写Safe Rust。</p>
+<p>Safe Rust和Unsafe Rust之间的边界是通过 <code>unsafe</code> 关键字明确界定的，就像接口一样，是一方通向另一方的唯一通道。因此我们可以说Safe Rust是安全的编程语言：所有不安全的部分都在 <code>unsafe</code> 边界以后。如果你想，你可以在你的代码库中加入 <code>#![forbid(unsafe_code)]</code> 标注以静态方式（在编译期）保证你一直在写Safe Rust。</p>
 <p><code>unsafe</code> 关键字有两个用途：声明编译器无法检查的约定，以及郑重宣告——我，程序员，保证这些约定都被遵守了。</p>
 <p>你可以通过使用 <code>unsafe</code> 来表明 <em>函数</em> 和 <em>trait声明</em> 存在未被编译器检查的约定。对于函数， <code>unsafe</code> 意味着使用本函数的用户必须仔细阅读该函数的文档，并保证用户严格遵守了此函数要求的约定。对于trait声明， <code>unsafe</code> 意味着实现此trait的对象必须仔细阅读该trait的文档，并保证该对象保证不违反此trait要求的约定。</p>
 <p>你可以使用 <code>unsafe</code> 块来宣告，该块内所有的不安全（unsafe）的操作都被验证，确保符合这些操作的约定。比如，传给 <a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a> 的索引不能越界。</p>
@@ -148,16 +148,44 @@
 <p>标准库有大量的unsafe函数，包括：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>, 它在索引时不进行越界检查，这么做就可能导致内存安全（memory-safety）被轻易违反。</li>
-<li><a href="https://doc.rust-lang.org/std/mem/transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/notimplementedyet.html">conversions</a>）。</li>
+<li><a href="https://doc.rust-lang.org/std/mem/transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
 <li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发未定义行为（Undefined Behavior）。</li>
 <li>所有的FFI（Foreign Function Interface，外部函数接口）函数都是 <code>unsafe</code> 的，因为其他的编程语言所做的事到底安不安全，Rust没法检查。</li>
 </ul>
-<p>Rust发布1.29.2版本时，标准库有定义下列unsafe traits（当然不仅限于下面这几个，不过他们都尚未进入stable分支，而且其中有一些可能永远不会进入stable）：</p>
+<p>Rust发布1.29.2版本时，标准库有定义下列unsafe traits（当然不仅限于下面这几个，不过其他的都尚未进入stable分支，而且其中有一些可能永远不会进入stable）：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个没有API的标记trait（marker trait），承诺所有实现它的结构（广义）可以被安全地在线程之间移动（move）。</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个没有API的标记trait（marker trait），并承诺所有实现它的结构（广义）可以被安全地在线程之间移动（move）。</li>
 <li><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> 是一个标记trait（marker trait），并承诺对于实现该trait的结构（广义），多个线程可以安全地共享该结构的引用（reference）。</li>
 <li><a href="https://doc.rust-lang.org/std/alloc/trait.GlobalAlloc.html"><code>GlobalAlloc</code></a> 允许定制整个程序的内存分配器。</li>
 </ul>
+<p>Rust标准库里有很多地方内部使用了Unsafe Rust。这些实现经过了严格的人工检查，因此基于这些不安全实现的Safe Rust接口可以被认为是安全的。</p>
+<p>所有这些分离的需求都最终归结为一个Safe Rust的基本性质，即 <em>正确性</em>：</p>
+<p><strong>无论如何，Safe Rust永远不会产生未定义行为（Undefined Behavior）。</strong></p>
+<p>Rust中安全与不安全互相分割的设计，其中暗含着它们之间存在“不对称信任”：Safe Rust必须相信它所直接接触的Unsafe Rust被正确地编写，而另一方面，Unsafe Rust在信任Safe Rust这一方面却总是如履薄冰。</p>
+<p>举个例子，Rust有 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a> 和 <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> traits，它们来区别那些能部分被比较的类型，以及那些提供了全序（total）的类型，后者意味着其比较表现是很合理的。</p>
+<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a> 对于只提供了偏序的类型没有意义，它要求比较键（key）实现了 <code>Ord</code> （译者注：即全序）。然而， <code>BTreeMap</code> 的内部实现有Unsafe Rust代码。因为我们无法接受让一个错误的 <code>Ord</code> 实现引发未定义行为——毕竟我们只是在写Safe Rust（译者注：抬头再看一眼上面的粗体字！并且注意， <code>Ord</code> 是Safe trait）——那么BTreeMap里的Unsafe代码必须要非常健壮（robust），以使它针对错误的（即实质上并非全序的） <code>Ord</code> 实现，也不能产生未定义行为。（译者注：这一段有点绕，但其中的逻辑并不复杂，即，只要我一直在写Safe代码，就算我写的都是垃圾，就算所有东西都实现错误，那这些Safe代码底层调用的Unsafe代码也不会引发上一篇所提到的那一堆错误中的任何一个——只是程序会表现异常，比如你明明之前向BTreeMap插入了一个值，并且自始至终没有做任何删除，但之后就是找不到这个值）</p>
+<p>Unsafe Rust代码<strong>就是</strong>不能信任Safe Rust代码被正确地编写。<code>BTreeMap</code> 在没有全序的类型上运行会表现异常，不过绝对不会产生未定义行为。Safe的承诺很实。</p>
+<p>你可能想问，如果 <code>BTreeMap</code> 不能相信 <code>Ord</code> （就因为它是Safe的）, 为什么它能相信其他 <em>任意</em> 的Safe代码？ 你看， <code>BTreeMap</code> 的实现不也依赖于整数和切片（slice）实现的正确性吗？这些不也都是Safe的吗？</p>
+<p>区别在于“范围（scope）”。当 <code>BTreeMap</code> 依赖于整数和切片的时候，它正依赖于非常独特而具体的实现。这个风险是可以估量的，并可与收益进行权衡。在这种情况下，我们反而没什么风险：如果整数或者切片这些在Rust里遍地都是的核心设施实现都有问题，那么 <em>一切</em> 都毁了，还写什么Rust程序啊。而且，维护整数和切片的人也在维护 <code>BTreeMap</code> （都是维护标准库的），因此密切监视以保证这些实现正确还算简单。</p>
+<p>同时， <code>BTreeMap</code> 的key类型是泛型参数。如果你信任其 <code>Ord</code> 实现，就相当于你信任过去、现在以及未来的所有 <code>Ord</code> 实现。这风险就大了：有人可能弄错了 <code>Ord</code> 实现，或者干脆撒谎骗过编译器，给他的根本不是全序的类型提供了个所谓 <code>Ord</code> 仅仅是因为“看起来好像能行”。 <code>BTreeMap</code> 得提前为这些情况做好准备。</p>
+<p>对于“信任返还给你的闭包（closure）”这种情况同理。</p>
+<p>这种没有明确边界的对泛型类型的信任问题也同样是 <code>unsafe</code> traits需要解决的问题，这里就不再赘述了。理论上来说， <code>BTreeMap</code> 类型应该要求它的键（key）实现一个叫 <code>UnsafeOrd</code> 的新trait而不是 <code>Ord</code> ，就像这样：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::cmp::Ordering;
+
+unsafe trait UnsafeOrd {
+    fn cmp(&amp;self, other: &amp;Self) -&gt; Ordering;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>于是，一个类型就要用 <code>unsafe</code> 代码来实现 <code>UnsafeOrd</code> 以表明编写的人确信他的实现满足了所有该trait需要的约定。在这种情况下， <code>BTreeMap</code> 底层实现的Unsafe Rust代码就可以有充分理由确信那个 <code>UnsafeOrd</code> 实现是正确的了。如果不正确，那错就在你的trait实现而不在我 <code>BTreeMap</code> ，因为明明是你先掀桌子，违反了Rust的安全保证。</p>
+<p>是否要给trait标记成 <code>unsafe</code> 实际上是个API设计决策。Safe trait实现起来简单，但依赖这些trait的unsafe代码必须防止错误行为。将trait标记成 <code>unsafe</code> 把正确实现的重任移交给了实现者。按照惯例，Rust会尽可能避免将trait标记成 <code>unsafe</code> 的，因为这么做会让Unsafe Rust像癌细胞一样充斥在标准库的各个角落，这可不好。</p>
+<p><code>Send</code> 和 <code>Sync</code> 是Unsafe的，因为线程安全（thread safety）是程序设计里的一个 <em>基本问题</em> ， Unsafe代码完全无法像抵御错误的 <code>Ord</code> 实现一样抵御它。同样， <code>GlobalAllocator</code> 记录了程序所使用的所有堆内存， 像 <code>Box</code> 或 <code>Vec</code> 这样的（泛型）类型都要依赖于它。如果它被搞砸了（比如分配了一块仍然还被程序使用着的内存），我们没法检测到这个问题，并且束手无策。因此 <code>GlobalAllocator</code> 也必须是Unsafe的（译者注：否则问题和上面同理——“我写的全是Safe Rust，怎么会出内存错误呢？”）。</p>
+<p>要不要把你写的trait标记成 <code>unsafe</code> 取决于同样的考虑。如果 <code>unsafe</code> 代码不能承受违反你trait约定的实现的后果，那么把你的trait标记成 <code>unsafe</code> 就合情合理。</p>
+<p>另外，虽然 <code>Send</code> 和 <code>Sync</code> 是 <code>unsafe</code> traits，如果一个类型内部派生的所有部分也都被证明实现这些traits是安全的，那这个类型本身 <em>也</em> 会被自动实现这些traits。内部值类型都是 <code>Send</code> 的类型也自动是 <code>Send</code> 的（否则不是），内部值类型都是 <code>Sync</code> 的类型也自动是 <code>Sync</code> 的（否则不是）。这种行为降低了标记这两个trait为 <code>unsafe</code> 的各式各样的危险情况。而且，自己 <em>手动实现</em> 内存分配器（或是因故要直接操作内存分配器）的人少之又少，这也降低了 <code>unsafe</code> 的风险。</p>
+<p>以上就是Safe Rust和Unsafe Rust取得的平衡。这种分离的设计目的是让使用Safe Rust尽可能符合人体工程学（ergonomic），不过它又要求你在写Unsafe Rust的时候要额外小心。本书的其余部分会广泛讨论你要小心什么，以及Unsafe Rust要遵守什么约定。</p>
 
                     </main>
 

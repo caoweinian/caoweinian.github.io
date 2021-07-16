@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html" class="active"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html" class="active"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,11 +153,11 @@
 <p>怎么说呢，与C语言不同，Rust是一门安全（safe）的编程语言。</p>
 <p>不过，与C语言类似，Rust也是一门不安全（unsafe）的编程语言。</p>
 <p>更准确一点，Rust <em>包含</em> 了安全（safe）与不安全（unsafe）编程语言。</p>
-<p>Rust可以被认为是 <em>Safe Rust</em> 和 <em>Unsafe Rust</em> 两者的结合体。顾名思义：Safe Rust是安全的，Unsafe Rust是，唔，不安全的。事实上，Unsafe Rust允许我们做一些 <em>真心</em> 很不安全的事请。Rust的创造者们再三告诉你山有猛虎，但我们这次偏要向山而行。</p>
+<p>Rust可以被认为是 <em>Safe Rust</em> 和 <em>Unsafe Rust</em> 两者的结合体。顾名思义：Safe Rust是安全的，Unsafe Rust是，唔，不安全的。事实上，Unsafe Rust允许我们做一些 <em>真心</em> 很不安全的事请。Rust的创造者们再三告诉你山有猛虎，奈何这本书的内容本身就是教你如何向山而行。</p>
 <p>Safe Rust是 <em>真正的</em> Rust语言。如果你只使用了Safe Rust部分，你就永远不用担心类型安全（type-safety）或内存安全（memory-safety）问题。你也完全不用担心悬垂指针（dangling pointer）、释放后使用（use-after-free），或者任何其他未定义行为（Undefined Behavior）。</p>
 <p>标准库给了你很多足够的现成工具让你能以最习惯方式通过Safe Rust编写高性能应用和库。</p>
 <p>但你可能想要这个语言的另一面。也许你在写一个不暴露给标准库的低级抽象。也许你在写标准库<em>本身</em>（它全部由Rust编写）。也许你想要做一些类型系统（type-system）不理解的事，弄些古灵精怪的东西。也许……你需要Unsafe Rust。</p>
-<p>Unsafe Rust和Safe Rust共享同样的语法规则和语义规则。而前者只是能让你多做一些 <em>其他</em> 事。这些事 <strong>绝 对 不 安 全</strong> （我们会在下一小节中定义这些概念）。</p>
+<p>Unsafe Rust和Safe Rust共享同样的语法规则和语义规则。而前者只是能让你多做一些 <em>其他</em> 事。这些事 <strong>非 常 不 安 全</strong> （我们会在下一小节中定义这些概念）。</p>
 <p>把两者分开的价值在于，我们受益于使用像C语言这样虽不安全却又能获得实现细节上的底层次控制，但又避免了由再使用另一门完全不同的安全编程语言而滋生的所有问题。</p>
 <p>还有一些问题——最明显的是，我们必须留意类型系统在属性（properties）中作出的所有假设，并且在与Unsafe Rust交互的时候时刻记着它们。这就是本书的目的：告诉你这些假设是什么，以及怎么处理它们。</p>
 
@@ -165,7 +165,7 @@
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="author.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                             <a rel="next" href="safe-unsafe-meaning.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
@@ -177,7 +177,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="author.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                     <a rel="next" href="safe-unsafe-meaning.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
