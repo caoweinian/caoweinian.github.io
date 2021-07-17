@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title></title>
-        <base href="/">
+        <title>Unsafe能做什么 - Rust魔法书</title>
         <!-- Custom HTML head -->
         
 
@@ -81,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html" class="active"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -141,19 +140,74 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="unsafe-rust能做什么"><a class="header" href="#unsafe-rust能做什么">Unsafe Rust能做什么</a></h1>
+<p>Unsafe Rust只比Safe Rust多了这些：</p>
+<ul>
+<li>解引用（dereference）裸指针</li>
+<li>调用 <code>unsafe</code> 函数（包括C函数，编译器黑魔法(intrinsics)、裸内存分配器）</li>
+<li>实现 <code>unsafe</code> traits</li>
+<li>改变 <code>static</code> 变量的值</li>
+<li>访问 <code>union</code> 内的数据域</li>
+</ul>
+<p>就这么多了。上面这些操作“沦为”Unsafe的原因是，误用它们会导致恐怖的UB。让UB入关就意味着允许编译器做任何错误得操作。你 <em>绝不能</em> 容忍UB。</p>
+<p>不过与C不同的是，Rust中能滋生UB的土壤少得可怜。Rust语言核心的全部注意力都集中在防止以下事情：</p>
+<ul>
+<li>通过 <code>*</code> 操作解引用悬空指针或未对齐的（unaligned）指针（见下面的讨论）</li>
+<li>违反 <a href="err/not-implemented-yet.html">指针别名规则</a></li>
+<li>以错误的ABI方式调用函数，或从错误的展开ABI（unwind ABI）的函数调用中展开（unwind）</li>
+<li>导致 <a href="err/not-implemented-yet.html">数据竞争</a> （data race）</li>
+<li>执行通过 <a href="https://doc.rust-lang.org/reference/attributes/codegen.html#the-target_feature-attribute">target features</a> 编译的代码，但当前线程不支持该设置</li>
+<li>生成非法值（可能就它自己，也可能是作为像 <code>enum</code>/<code>struct</code>/数组/元组的一个域）：
+<ul>
+<li>非0非1的 <code>bool</code> 值</li>
+<li>不符合任何枚举标签的枚举值（译者注：一个枚举可以看作“(A, B)”元素的集合，其中A是字符串标签，B是对应的整数值。这里严格来说，非法值形如(_, C)，其中C\( \notin \)BSet，BSet是所有合法B的集合）</li>
+<li>空 <code>fn</code> 指针</li>
+<li>不在 [0x0, 0xD7FF] 或 [0xE000, 0x10FFFF] 范围内的 <code>char</code> 值</li>
+<li><code>!</code>（译者注：即never type，在《The Book》里19.3节有讲到）（任何值对它都是非法的）</li>
+<li>从 <a href="err/not-implemented-yet.html">未初始化内存</a> 读来的整数（<code>i*</code>/<code>u*</code>）、浮点数（<code>f*</code>）、裸指针，或 <code>str</code> 内有未初始化（uninitialized）的内存</li>
+<li>悬空、未对齐、指向非法值的引用/<code>Box</code></li>
+<li>所有拥有如下所述的错误元数据的广义引用（wide reference）和 <code>Box</code>：
+<ul>
+<li>如果一个 <code>Trait</code> 的指针或引用实质上并不指向 <code>dyn Trait</code> 中运行时（通过虚表，vtable）才能确定的那个真实实质类型，那么 <code>dyn Trait</code> 的元数据是非法的</li>
+<li>slice的元数据在其length不是一个合法的 <code>usize</code> 时非法（比如这个usize是从未初始化内存里读来的）</li>
+</ul>
+</li>
+<li>如果一个类型明确规定其中的某个（些）值是非法的，但实际上这个类型恰好就存着这个（些）非法值，比如 <a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 里存着null值的情况。（访问这些非法值的功能目前是unstable的，不过像 <a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 这样的stable libstd类型就使用了这个功能）</li>
+</ul>
+</li>
+</ul>
+<p>当你进行赋值、传参给函数或底层系统原语、从函数或底层系统原语返回值时，其实都在“生成”（produce）一个值。</p>
+<p>如果指针/引用是空的，或者它指向的内存区域空间不都是（或都不是）之前以某种方式被正确分配的，那么它就是悬空指针（译者注：Rust与C/C++对于悬空指针的定义完全一致；这里的描述多少有些学院派）。被指向的内存字节范围（span）的大小取决于指针的值，以及被指向类型的大小。因此，如果这个范围是空的，那么此时“悬空”与“非空”定义等价（译者注：如果被指向的类型大小为0，那这个指针理应是空的，否则它总归指向了不属于他的某个起始地址）。注意切片和字符串拥有它们所指向的范围下的全部空间，它们的长度（length）元数据不能过大。尤其是，它们都不能拥有比 <code>isize::MAX</code> 字节还大的内存。万一你真想要这么大，考虑使用裸指针管理它们吧。</p>
+<p>讲完了。这些就是Rust里UB的所有源头了。当然，unsafe函数和unsafe traits可以很自然地声明任意约束来要求程序去遵守它们，以避免UB。比如内存分配器API就明确写了：回收（deallocate）未被分配的（unallocated）内存是UB。</p>
+<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）</p>
+<p>不过Rust允许一些奇怪的操作，而且不认为这些操作是 <code>unsafe</code> 的：</p>
+<ul>
+<li>死锁</li>
+<li><a href="err/not-implemented-yet.html">竞争条件</a></li>
+<li>内存泄漏</li>
+<li>析构失败</li>
+<li>整数溢出</li>
+<li>程序中止（abort）</li>
+<li>删库跑路</li>
+</ul>
+<p>当然了，能妥善处理如上所有问题的程序也 <em>可能</em> 是不正确的。Rust做了很多努力，提供了很多工具让这种事尽可能少发生，但终归无法杜绝。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="safe-unsafe-meaning.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="safe-unsafe-meaning.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
             </nav>
 
         </div>

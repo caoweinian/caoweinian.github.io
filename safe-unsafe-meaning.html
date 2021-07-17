@@ -28,6 +28,8 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/nomicon.css">
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -78,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,7 +150,7 @@
 <p>标准库有大量的unsafe函数，包括：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>, 它在索引时不进行越界检查，这么做就可能导致内存安全（memory-safety）被轻易违反。</li>
-<li><a href="https://doc.rust-lang.org/std/mem/transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
 <li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发未定义行为（Undefined Behavior）。</li>
 <li>所有的FFI（Foreign Function Interface，外部函数接口）函数都是 <code>unsafe</code> 的，因为其他的编程语言所做的事到底安不安全，Rust没法检查。</li>
 </ul>
@@ -194,6 +196,9 @@ unsafe trait UnsafeOrd {
                             <a rel="prev" href="meet-safe-and-unsafe.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+                            <a rel="next" href="what-unsafe-does.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -202,6 +207,9 @@ unsafe trait UnsafeOrd {
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     <a rel="prev" href="meet-safe-and-unsafe.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="what-unsafe-does.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 

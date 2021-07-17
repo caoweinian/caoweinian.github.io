@@ -29,6 +29,8 @@
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/nomicon.css">
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -79,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -164,16 +166,38 @@
 <p>该项目是《The Rustonomicon》的非官方简体中文翻译，系个人项目，目前仍在按原书顺序翻译中，预计翻译速度为一到三天翻译一小节（不承诺）。截至2021年7月14日，我仍未在互联网上看到关于《The Rustonomicon》的完整翻译（有部分翻译的），我也学习Rust两年有余了，希望借此机会更深一步。机缘凑巧，我想通过翻译官方书籍的方式来降低大家学习Rust的门槛。</p>
 <p>囿于理解能力和翻译能力，该项目的不保证准确地传达该书的思想。读者可在阅读时同时准备英文版原书作阅读比对。</p>
 <p>热切希望大家能对本项目作出贡献。</p>
-<h2 id="翻译风格"><a class="header" href="#翻译风格">翻译风格</a></h2>
+<h2 id="翻译"><a class="header" href="#翻译">翻译</a></h2>
+<h3 id="翻译风格"><a class="header" href="#翻译风格">翻译风格</a></h3>
 <ul>
 <li>不将代码、函数翻译成中文</li>
-<li>会翻译代码中的所有注释，但同时也保留原文</li>
+<li>会翻译代码中的所有注释</li>
 <li>因为“unsafe”是Rust的关键字，而且它的语义与中文的“不安全”有很大差别，当原文指unsafe关键字或指由该关键字所直接引申出的unsafe概念时，我们会保留英文。特别地，在后面那一种情况里，我会将unsafe大写成Unsafe。另外，我会将英文概念的“unsafe”翻译成“危险”或类似的非否定词语，不会翻译成“不安全”。</li>
-<li>将文字逐句逐词的原意，与通俗易懂为共同目标。因为个人翻译水平有限，当两者存在冲突时，我会优先以后者为目的。</li>
+<li>把文字逐句逐词的原意、通俗易懂作为共同目标。因为个人翻译水平有限，当两者存在冲突时，我会优先以后者为目的。</li>
 <li>不排除行文中有使用互联网（亚）文化梗行为的存在，但保证若出现，绝不会让不懂该梗出处的读者感到不适与费解；梗将会被很自然地嵌入。</li>
 <li>在设身处地重新阅读一遍翻译过来的中文后，如果我觉得这段文字有些费解，我可能会在其中加入“括弧——译者注”。</li>
 <li>原文中的struct/trait/enum等Rust内置对象超链接的路径是&quot;.rustup&quot;目录工具链下的相对路径，而若单独将本书提出，这些路径全部会失效；因此我将这些超链接全部改成了https万维网上的官方网页的对应部分。</li>
 <li>在确保“信达雅”后，会考虑试着加入一些诙谐幽默的文字，以减少阅读的枯燥感并同时加深读者对相应概念的理解。</li>
+<li>对于大部分计算机科学术语，会在第一次遇到时顺带给出原英文；在第二次及以后的出场中<em>可能</em>给出英文。</li>
+</ul>
+<h3 id="中英文非精准对照表"><a class="header" href="#中英文非精准对照表">中英文（非精准）对照表</a></h3>
+<p>reference——引用
+Undefined Behavior——未定义行为（或UB）
+compiler intrinsic——编译器黑魔法（注：我称之为黑魔法是因为他与C++某些功能，如std::base_of这种无法通过语言本身来实现的功能相似，只由编译器调用，而在C++那个圈子，就经常称之为黑魔法）
+dangling pointer——悬空指针
+unaligned——未对齐的
+unwind——（栈）展开
+data race——数据竞争
+primitive——基础类型或原语（前者是编程语言里的概念，后者是操作系统或硬件概念；当原文出现primitive时，有充分信息判断该词指代哪一个意思）
+metadata——元数据
+pointee——被指针所指向的数据
+slice——切片（一般它指std::slice的相关概念）
+deallocate——回收（以传统C为例，内存的使用本质上要经过四步走“allocate-initialize-destroy-deallocate”。读者要分清destroy和deallocate的区别，前者是在原地析构对象，以使这段内存可以<em>接下来</em>直接被归还到堆内存且不会产生memory leak，后一步才是真正的归还操作。这些概念在Rust同样适用）
+destructor——析构函数</p>
+<h3 id="保留对照表"><a class="header" href="#保留对照表">保留对照表</a></h3>
+<p>有些英文的中文翻译反而会失去其内涵，本书选择保留原文：</p>
+<ul>
+<li>(un)sound(ness)。比如当说到某个函数是sound的，它有这层意思：这个函数被严格证明在任何输入情况都有正确的行为。反之若是unsound的，意思是：存在一种或一类（甚至全部）输入，程序产生了不正确的行为。但将sound翻译成“正确”“可靠”“严谨”都有词不达意的缺憾。</li>
+<li>stable/unstable。Rust有些功能是未稳定的，不能在stable channel里编译，需要nightly channel；相反，可以在stable channel里使用的功能是stable的。</li>
 </ul>
 <p><strong>不承诺以上翻译风格会被贯彻到底，仅承诺若上面的文字还在，翻译风格就按上述约定保持。</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="遇见safe与unsafe"><a class="header" href="#遇见safe与unsafe">遇见Safe与Unsafe</a></h1>
@@ -208,7 +232,7 @@
 <p>标准库有大量的unsafe函数，包括：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>, 它在索引时不进行越界检查，这么做就可能导致内存安全（memory-safety）被轻易违反。</li>
-<li><a href="https://doc.rust-lang.org/std/mem/transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
 <li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发未定义行为（Undefined Behavior）。</li>
 <li>所有的FFI（Foreign Function Interface，外部函数接口）函数都是 <code>unsafe</code> 的，因为其他的编程语言所做的事到底安不安全，Rust没法检查。</li>
 </ul>
@@ -246,6 +270,57 @@ unsafe trait UnsafeOrd {
 <p>要不要把你写的trait标记成 <code>unsafe</code> 取决于同样的考虑。如果 <code>unsafe</code> 代码不能承受违反你trait约定的实现的后果，那么把你的trait标记成 <code>unsafe</code> 就合情合理。</p>
 <p>另外，虽然 <code>Send</code> 和 <code>Sync</code> 是 <code>unsafe</code> traits，如果一个类型内部派生的所有部分也都被证明实现这些traits是安全的，那这个类型本身 <em>也</em> 会被自动实现这些traits。内部值类型都是 <code>Send</code> 的类型也自动是 <code>Send</code> 的（否则不是），内部值类型都是 <code>Sync</code> 的类型也自动是 <code>Sync</code> 的（否则不是）。这种行为降低了标记这两个trait为 <code>unsafe</code> 的各式各样的危险情况。而且，自己 <em>手动实现</em> 内存分配器（或是因故要直接操作内存分配器）的人少之又少，这也降低了 <code>unsafe</code> 的风险。</p>
 <p>以上就是Safe Rust和Unsafe Rust取得的平衡。这种分离的设计目的是让使用Safe Rust尽可能符合人体工程学（ergonomic），不过它又要求你在写Unsafe Rust的时候要额外小心。本书的其余部分会广泛讨论你要小心什么，以及Unsafe Rust要遵守什么约定。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unsafe-rust能做什么"><a class="header" href="#unsafe-rust能做什么">Unsafe Rust能做什么</a></h1>
+<p>Unsafe Rust只比Safe Rust多了这些：</p>
+<ul>
+<li>解引用（dereference）裸指针</li>
+<li>调用 <code>unsafe</code> 函数（包括C函数，编译器黑魔法(intrinsics)、裸内存分配器）</li>
+<li>实现 <code>unsafe</code> traits</li>
+<li>改变 <code>static</code> 变量的值</li>
+<li>访问 <code>union</code> 内的数据域</li>
+</ul>
+<p>就这么多了。上面这些操作“沦为”Unsafe的原因是，误用它们会导致恐怖的UB。让UB入关就意味着允许编译器做任何错误得操作。你 <em>绝不能</em> 容忍UB。</p>
+<p>不过与C不同的是，Rust中能滋生UB的土壤少得可怜。Rust语言核心的全部注意力都集中在防止以下事情：</p>
+<ul>
+<li>通过 <code>*</code> 操作解引用悬空指针或未对齐的（unaligned）指针（见下面的讨论）</li>
+<li>违反 <a href="err/not-implemented-yet.html">指针别名规则</a></li>
+<li>以错误的ABI方式调用函数，或从错误的展开ABI（unwind ABI）的函数调用中展开（unwind）</li>
+<li>导致 <a href="err/not-implemented-yet.html">数据竞争</a> （data race）</li>
+<li>执行通过 <a href="https://doc.rust-lang.org/reference/attributes/codegen.html#the-target_feature-attribute">target features</a> 编译的代码，但当前线程不支持该设置</li>
+<li>生成非法值（可能就它自己，也可能是作为像 <code>enum</code>/<code>struct</code>/数组/元组的一个域）：
+<ul>
+<li>非0非1的 <code>bool</code> 值</li>
+<li>不符合任何枚举标签的枚举值（译者注：一个枚举可以看作“(A, B)”元素的集合，其中A是字符串标签，B是对应的整数值。这里严格来说，非法值形如(_, C)，其中C\( \notin \)BSet，BSet是所有合法B的集合）</li>
+<li>空 <code>fn</code> 指针</li>
+<li>不在 [0x0, 0xD7FF] 或 [0xE000, 0x10FFFF] 范围内的 <code>char</code> 值</li>
+<li><code>!</code>（译者注：即never type，在《The Book》里19.3节有讲到）（任何值对它都是非法的）</li>
+<li>从 <a href="err/not-implemented-yet.html">未初始化内存</a> 读来的整数（<code>i*</code>/<code>u*</code>）、浮点数（<code>f*</code>）、裸指针，或 <code>str</code> 内有未初始化（uninitialized）的内存</li>
+<li>悬空、未对齐、指向非法值的引用/<code>Box</code></li>
+<li>所有拥有如下所述的错误元数据的广义引用（wide reference）和 <code>Box</code>：
+<ul>
+<li>如果一个 <code>Trait</code> 的指针或引用实质上并不指向 <code>dyn Trait</code> 中运行时（通过虚表，vtable）才能确定的那个真实实质类型，那么 <code>dyn Trait</code> 的元数据是非法的</li>
+<li>slice的元数据在其length不是一个合法的 <code>usize</code> 时非法（比如这个usize是从未初始化内存里读来的）</li>
+</ul>
+</li>
+<li>如果一个类型明确规定其中的某个（些）值是非法的，但实际上这个类型恰好就存着这个（些）非法值，比如 <a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 里存着null值的情况。（访问这些非法值的功能目前是unstable的，不过像 <a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a> 这样的stable libstd类型就使用了这个功能）</li>
+</ul>
+</li>
+</ul>
+<p>当你进行赋值、传参给函数或底层系统原语、从函数或底层系统原语返回值时，其实都在“生成”（produce）一个值。</p>
+<p>如果指针/引用是空的，或者它指向的内存区域空间不都是（或都不是）之前以某种方式被正确分配的，那么它就是悬空指针（译者注：Rust与C/C++对于悬空指针的定义完全一致；这里的描述多少有些学院派）。被指向的内存字节范围（span）的大小取决于指针的值，以及被指向类型的大小。因此，如果这个范围是空的，那么此时“悬空”与“非空”定义等价（译者注：如果被指向的类型大小为0，那这个指针理应是空的，否则它总归指向了不属于他的某个起始地址）。注意切片和字符串拥有它们所指向的范围下的全部空间，它们的长度（length）元数据不能过大。尤其是，它们都不能拥有比 <code>isize::MAX</code> 字节还大的内存。万一你真想要这么大，考虑使用裸指针管理它们吧。</p>
+<p>讲完了。这些就是Rust里UB的所有源头了。当然，unsafe函数和unsafe traits可以很自然地声明任意约束来要求程序去遵守它们，以避免UB。比如内存分配器API就明确写了：回收（deallocate）未被分配的（unallocated）内存是UB。</p>
+<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）</p>
+<p>不过Rust允许一些奇怪的操作，而且不认为这些操作是 <code>unsafe</code> 的：</p>
+<ul>
+<li>死锁</li>
+<li><a href="err/not-implemented-yet.html">竞争条件</a></li>
+<li>内存泄漏</li>
+<li>析构失败</li>
+<li>整数溢出</li>
+<li>程序中止（abort）</li>
+<li>删库跑路</li>
+</ul>
+<p>当然了，能妥善处理如上所有问题的程序也 <em>可能</em> 是不正确的。Rust做了很多努力，提供了很多工具让这种事尽可能少发生，但终归无法杜绝。</p>
 
                     </main>
 
@@ -274,7 +349,9 @@ unsafe trait UnsafeOrd {
         <!-- Custom JS scripts -->
         <script type="text/javascript">
         window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
         });
         </script>
     </body>
