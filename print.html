@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rust魔法书</title>
+        <title>Rust死灵书</title>
         <meta name="robots" content="noindex" />
         <!-- Custom HTML head -->
         
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -111,7 +111,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust魔法书</h1>
+                    <h1 class="menu-title">Rust死灵书</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -141,7 +141,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="rust魔法书"><a class="header" href="#rust魔法书">Rust魔法书</a></h1>
+                        <h1 id="rust死灵书"><a class="header" href="#rust死灵书">Rust死灵书</a></h1>
 <div class="warning">
 <p>警告：
 这本书尚未完成。
@@ -152,26 +152,29 @@
 <blockquote>
 <p>万般渴望的安全，最终匿于无形；黑暗与恐惧在我认为脚下的土地无比舒适的那最惬意的一刻轰然而降。狂风掠过，我睁眼看到血样的绘图：“安全记忆”的告示牌被撕碎；尖针飞出，刺向后方驰来的轮胎；猛踩住刹车，却只让仪表盘针向右飞转；任何键的第二次按下都不起任何作用；车随导航驶向无人循迹的深渊。原来承诺永无事故的轿车本身就在事故漩涡的中心。它正发出刺鼻的铜臭，水箱倾泻着带活物的酸液。我看着车窗右上角的“检验合格”，呆在原地，什么都做不了。</p>
 </blockquote>
-<p>Rust魔法书深入挖掘所有你需要编写Unsafe Rust程序时需要了解的脏乱差细枝末节。</p>
+<p>Rust死灵书深入挖掘所有你需要编写Unsafe Rust程序时需要了解的脏乱差细枝末节。</p>
 <p>如果你还想要快乐地编写Rust程序，请现在马上回头，忘记这本书的存在——这本书实在不是你所需要的。然而，然而，如果你确实想写unsafe代码——或者仅仅想要挖掘Rust的本质——这本书有很多对你有用的信息。</p>
 <p>与 <em><a href="https://doc.rust-lang.org/book/">Rust程序设计语言</a></em> 不同，我们假定你有这些先行知识。特别是，你应该熟悉基本的系统编程以及Rust本身。如果你不熟悉这些主题，你应该先读 <a href="https://doc.rust-lang.org/book/">The Book</a> 。不过，我们不假定你读过《The Book》 。我们会注意在适当的时候偶尔复习一下这本书涉及的基础知识。你大可以直接跳到这本书来读；不过有一点，我们不会再从头解释一切了。</p>
-<p>这本书主要是 <a href="https://doc.rust-lang.org/reference/">The Reference</a> 的高层次（high-level）伴书。《The Reference》介绍了Rust语言在各个方面的语法和语义，而《Rust魔法书》描述的是如何把语法/语义这些细碎的东西组合起来，以及在其中可能遇到的各类问题。</p>
-<p>值得注意的是，我们没有很好地同步《Rust魔法书》和《The Reference》，因此这两本书可能有重复的内容。大体上讲，如果两本书之间出现了矛盾，你应当假定隔壁那本《The Reference》是正确的。并不是说那本书就是金科玉律，只不过那本书受到的关照更多，自然就被维护得更好。</p>
+<p>这本书主要是 <a href="https://doc.rust-lang.org/reference/">The Reference</a> 的高层次（high-level）伴书。《The Reference》介绍了Rust语言在各个方面的语法和语义，而《Rust死灵书》描述的是如何把语法/语义这些细碎的东西组合起来，以及在其中可能遇到的各类问题。</p>
+<p>值得注意的是，我们没有很好地同步《Rust死灵书》和《The Reference》，因此这两本书可能有重复的内容。大体上讲，如果两本书之间出现了矛盾，你应当假定隔壁那本《The Reference》是正确的。并不是说那本书就是金科玉律，只不过那本书受到的关照更多，自然就被维护得更好。</p>
 <p>这本书描述的主题有：safe &amp; unsafe、Rust语言核心和Rust标准库提供的unsafe原语、使用unsafe原语创建safe抽象的技术、子类型化（subtyping）和型变（variance）、异常安全（exception-safety，或在Rust中的恐慌/栈展开安全——panic/unwind-safety）、使用未初始化的内存、类型双关（type punning）、并发、与其他编程语言的互操作（FFI）、优化技巧、如何创建编译器/操作系统/硬件原语、如何<strong>不</strong>惹怒搞好内存模型的人们、如何<strong>惹怒</strong>搞好内存模型的人、……</p>
-<p>《Rust魔法书》不会穷举Rust标准库内的所有语义以及每个API所提供的保证，也不会穷尽Rust的所有特性。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="作者有话说"><a class="header" href="#作者有话说">作者有话说</a></h1>
+<p>《Rust死灵书》不会穷举Rust标准库内的所有语义以及每个API所提供的保证，也不会穷尽Rust的所有特性。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="译者写在开头的话"><a class="header" href="#译者写在开头的话">译者写在开头的话</a></h1>
 <h2 id="关于原项目"><a class="header" href="#关于原项目">关于原项目</a></h2>
 <p>若想要参考原书内容，请见 <a href="https://github.com/rust-lang/nomicon">《The Rustonomicon》</a> 。</p>
 <h2 id="关于本项目"><a class="header" href="#关于本项目">关于本项目</a></h2>
-<p>该项目是《The Rustonomicon》的非官方简体中文翻译，系个人项目，目前仍在按原书顺序翻译中，预计翻译速度为一到三天翻译一小节（不承诺）。截至2021年7月14日，我仍未在互联网上看到关于《The Rustonomicon》的完整翻译（有部分翻译的），我也学习Rust两年有余了，希望借此机会更深一步。机缘凑巧，我想通过翻译官方书籍的方式来降低大家学习Rust的门槛。</p>
-<p>囿于理解能力和翻译能力，该项目的不保证准确地传达该书的思想。读者可在阅读时同时准备英文版原书作阅读比对。</p>
+<p>该项目是《The Rustonomicon》的非官方简体中文翻译，系个人项目，目前仍在按原书顺序翻译中，预计翻译速度为一到三天翻译一小节（不保证）。</p>
+<p>在翻译完本书（也即快速原型周期）之前，每一次push都会伴随着一节新内容，或对目前已发现的bug的修复。在这个周期中，每一次commit的message都是严格的“semver 2.0字符串X”，其中主、次版本号均为0，修订号每次递增；X是可选内容，为一个英文冒号加一个英文空格加bug修复内容。当全书翻译完毕一周后，本书将进入v0.1.0。</p>
+<p>截至2021年7月14日，我未在互联网上看到关于《The Rustonomicon》的完整翻译（有部分翻译的），我学习Rust两年有余了，希望借此机会更深一步。机缘凑巧，我想通过翻译官方书籍的方式来降低大家学习Rust的门槛。</p>
+<p>囿于理解能力和翻译能力，该项目的不保证准确地传达该书的思想。读者可在阅读时同时准备英文版原书作阅读比对。另外，本书是不稳定的，比如第二章很可能在之后的版本中被删除（因为《The Reference》已有对应完整的介绍了），本书可能滞后于实际的版本。</p>
 <p>热切希望大家能对本项目作出贡献。</p>
 <h2 id="翻译"><a class="header" href="#翻译">翻译</a></h2>
 <h3 id="翻译风格"><a class="header" href="#翻译风格">翻译风格</a></h3>
 <ul>
 <li>不将代码、函数翻译成中文</li>
+<li>不翻译编译器输出</li>
 <li>会翻译代码中的所有注释</li>
-<li>因为“unsafe”是Rust的关键字，而且它的语义与中文的“不安全”有很大差别，当原文指unsafe关键字或指由该关键字所直接引申出的unsafe概念时，我们会保留英文。特别地，在后面那一种情况里，我会将unsafe大写成Unsafe。另外，我会将英文概念的“unsafe”翻译成“危险”或类似的非否定词语，不会翻译成“不安全”。</li>
+<li>因为“unsafe”是Rust的关键字，而且它的语义与中文的“不安全”有很大差别，当原文指unsafe关键字或指由该关键字所直接引申出的unsafe概念时，我们会保留英文。特别地，在后面那一种情况里，我会将unsafe大写成Unsafe。</li>
 <li>把文字逐句逐词的原意、通俗易懂作为共同目标。因为个人翻译水平有限，当两者存在冲突时，我会优先以后者为目的。</li>
 <li>不排除行文中有使用互联网（亚）文化梗行为的存在，但保证若出现，绝不会让不懂该梗出处的读者感到不适与费解；梗将会被很自然地嵌入。</li>
 <li>在设身处地重新阅读一遍翻译过来的中文后，如果我觉得这段文字有些费解，我可能会在其中加入“括弧——译者注”。</li>
@@ -180,19 +183,23 @@
 <li>对于大部分计算机科学术语，会在第一次遇到时顺带给出原英文；在第二次及以后的出场中<em>可能</em>给出英文。</li>
 </ul>
 <h3 id="中英文非精准对照表"><a class="header" href="#中英文非精准对照表">中英文（非精准）对照表</a></h3>
-<p>reference——引用
-Undefined Behavior——未定义行为（或UB）
-compiler intrinsic——编译器黑魔法（注：我称之为黑魔法是因为他与C++某些功能，如std::base_of这种无法通过语言本身来实现的功能相似，只由编译器调用，而在C++那个圈子，就经常称之为黑魔法）
-dangling pointer——悬空指针
-unaligned——未对齐的
-unwind——（栈）展开
-data race——数据竞争
-primitive——基础类型或原语（前者是编程语言里的概念，后者是操作系统或硬件概念；当原文出现primitive时，有充分信息判断该词指代哪一个意思）
-metadata——元数据
-pointee——被指针所指向的数据
-slice——切片（一般它指std::slice的相关概念）
-deallocate——回收（以传统C为例，内存的使用本质上要经过四步走“allocate-initialize-destroy-deallocate”。读者要分清destroy和deallocate的区别，前者是在原地析构对象，以使这段内存可以<em>接下来</em>直接被归还到堆内存且不会产生memory leak，后一步才是真正的归还操作。这些概念在Rust同样适用）
-destructor——析构函数</p>
+<ul>
+<li>reference——引用</li>
+<li>pointer——指针</li>
+<li>dangling pointer——悬空指针</li>
+<li>pointee——被指针所指向的数据</li>
+<li>Undefined Behavior——未定义行为（或UB）</li>
+<li>compiler intrinsic——编译器黑魔法（注：我称之为黑魔法是因为他与C++某些功能，如std::base_of这种无法通过语言本身来实现的功能相似，只由编译器了解并调用。C++那个圈子经常称之为黑魔法）</li>
+<li>unaligned——未对齐的</li>
+<li>unwind——（栈）展开</li>
+<li>data race——数据竞争</li>
+<li>primitive——基础类型或原语（前者是编程语言里的概念，后者是操作系统或硬件概念；当原文出现primitive时，有充分信息判断该词指代哪一个意思）</li>
+<li>metadata——元数据</li>
+<li>slice——切片（一般它指std::slice的相关概念）</li>
+<li>deallocate——回收（以传统C为例，内存的使用本质上要经过四步走“allocate-initialize-destroy-deallocate”。读者要分清destroy和deallocate的区别，前者是在原地析构对象，以使这段内存可以<em>接下来</em>直接被归还到堆内存且不会产生memory leak，后一步才是真正的归还操作。这些概念在Rust同样适用）</li>
+<li>destructor——析构函数</li>
+<li>data layout——数据布局</li>
+</ul>
 <h3 id="保留对照表"><a class="header" href="#保留对照表">保留对照表</a></h3>
 <p>有些英文的中文翻译反而会失去其内涵，本书选择保留原文：</p>
 <ul>
@@ -210,13 +217,13 @@ destructor——析构函数</p>
 <li>用另一种能够处理这些繁琐细节的编程语言重新实现你想要的一切</li>
 </ul>
 <p>对于最后那一个选项，程序员会倾向于使用<em>C语言</em>。对于只对外声明了C语言函数接口的系统，程序员与该系统交互也几乎必须使用C语言。</p>
-<p>不幸的是，使用C语言是非常非常非常不安全的（不否认，有时你使用它是有充分理由的），这种不安全感在你想要和另一个语言进行互操作的时候会更加被放大。你必须小心仔细，去保证C语言和其他语言遵循了什么样的调用约定，而且他们之间不会互相使绊子埋雷。</p>
+<p>不幸的是，使用C语言是非常非常非常危险的（不否认，有时你使用它是有充分理由的），这种不安在你想要和另一个语言进行互操作的时候会更加被放大。你必须小心仔细，去保证C语言和其他语言遵循了什么样的调用约定，而且他们之间不会互相使绊子埋雷。</p>
 <p>这和Rust有什么关系？</p>
 <p>怎么说呢，与C语言不同，Rust是一门安全（safe）的编程语言。</p>
 <p>不过，与C语言类似，Rust也是一门不安全（unsafe）的编程语言。</p>
 <p>更准确一点，Rust <em>包含</em> 了安全（safe）与不安全（unsafe）编程语言。</p>
 <p>Rust可以被认为是 <em>Safe Rust</em> 和 <em>Unsafe Rust</em> 两者的结合体。顾名思义：Safe Rust是安全的，Unsafe Rust是，唔，不安全的。事实上，Unsafe Rust允许我们做一些 <em>真心</em> 很不安全的事请。Rust的创造者们再三告诉你山有猛虎，奈何这本书的内容本身就是教你如何向山而行。</p>
-<p>Safe Rust是 <em>真正的</em> Rust语言。如果你只使用了Safe Rust部分，你就永远不用担心类型安全（type-safety）或内存安全（memory-safety）问题。你也完全不用担心悬垂指针（dangling pointer）、释放后使用（use-after-free），或者任何其他未定义行为（Undefined Behavior）。</p>
+<p>Safe Rust是 <em>真正的</em> Rust语言。如果你只使用了Safe Rust部分，你就永远不用担心类型安全（type-safety）或内存安全（memory-safety）问题。你也完全不用担心悬垂指针（dangling pointer）、释放后使用（use-after-free），或者任何其他UB。</p>
 <p>标准库给了你很多足够的现成工具让你能以最习惯方式通过Safe Rust编写高性能应用和库。</p>
 <p>但你可能想要这个语言的另一面。也许你在写一个不暴露给标准库的低级抽象。也许你在写标准库<em>本身</em>（它全部由Rust编写）。也许你想要做一些类型系统（type-system）不理解的事，弄些古灵精怪的东西。也许……你需要Unsafe Rust。</p>
 <p>Unsafe Rust和Safe Rust共享同样的语法规则和语义规则。而前者只是能让你多做一些 <em>其他</em> 事。这些事 <strong>非 常 危 险</strong> （我们会在下一小节中定义这些概念）。</p>
@@ -233,7 +240,7 @@ destructor——析构函数</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>, 它在索引时不进行越界检查，这么做就可能导致内存安全（memory-safety）被轻易违反。</li>
 <li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
-<li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发未定义行为（Undefined Behavior）。</li>
+<li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发UB。</li>
 <li>所有的FFI（Foreign Function Interface，外部函数接口）函数都是 <code>unsafe</code> 的，因为其他的编程语言所做的事到底安不安全，Rust没法检查。</li>
 </ul>
 <p>Rust发布1.29.2版本时，标准库有定义下列unsafe traits（当然不仅限于下面这几个，不过其他的都尚未进入stable分支，而且其中有一些可能永远不会进入stable）：</p>
@@ -244,11 +251,11 @@ destructor——析构函数</p>
 </ul>
 <p>Rust标准库里有很多地方内部使用了Unsafe Rust。这些实现经过了严格的人工检查，因此基于这些不安全实现的Safe Rust接口可以被认为是安全的。</p>
 <p>所有这些分离的需求都最终归结为一个Safe Rust的基本性质，即 <em>正确性</em>：</p>
-<p><strong>无论如何，Safe Rust永远不会产生未定义行为（Undefined Behavior）。</strong></p>
+<p><strong>无论如何，Safe Rust永远不会产生UB。</strong></p>
 <p>Rust中安全与不安全互相分割的设计，其中暗含着它们之间存在“不对称信任”：Safe Rust必须相信它所直接接触的Unsafe Rust被正确地编写，而另一方面，Unsafe Rust在信任Safe Rust这一方面却总是如履薄冰。</p>
 <p>举个例子，Rust有 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a> 和 <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> traits，它们来区别那些能部分被比较的类型，以及那些提供了全序（total）的类型，后者意味着其比较表现是很合理的。</p>
-<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a> 对于只提供了偏序的类型没有意义，它要求比较键（key）实现了 <code>Ord</code> （译者注：即全序）。然而， <code>BTreeMap</code> 的内部实现有Unsafe Rust代码。因为我们无法接受让一个错误的 <code>Ord</code> 实现引发未定义行为——毕竟我们只是在写Safe Rust（译者注：抬头再看一眼上面的粗体字！并且注意， <code>Ord</code> 是Safe trait）——那么BTreeMap里的Unsafe代码必须要非常健壮（robust），以使它针对错误的（即实质上并非全序的） <code>Ord</code> 实现，也不能产生未定义行为。（译者注：这一段有点绕，但其中的逻辑并不复杂，即，只要我一直在写Safe代码，就算我写的都是垃圾，就算所有东西都实现错误，那这些Safe代码底层调用的Unsafe代码也不会引发上一篇所提到的那一堆错误中的任何一个——只是程序会表现异常，比如你明明之前向BTreeMap插入了一个值，并且自始至终没有做任何删除，但之后就是找不到这个值）</p>
-<p>Unsafe Rust代码<strong>就是</strong>不能信任Safe Rust代码被正确地编写。<code>BTreeMap</code> 在没有全序的类型上运行会表现异常，不过绝对不会产生未定义行为。Safe的承诺很实。</p>
+<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a> 对于只提供了偏序的类型没有意义，它要求比较键（key）实现了 <code>Ord</code> （译者注：即全序）。然而， <code>BTreeMap</code> 的内部实现有Unsafe Rust代码。因为我们无法接受让一个错误的 <code>Ord</code> 实现引发UB——毕竟我们只是在写Safe Rust（译者注：抬头再看一眼上面的粗体字！并且注意， <code>Ord</code> 是Safe trait）——那么BTreeMap里的Unsafe代码必须要非常健壮（robust），以使它针对错误的（即实质上并非全序的） <code>Ord</code> 实现，也不能产生Ub。（译者注：这一段有点绕，但其中的逻辑并不复杂，即，只要我一直在写Safe代码，就算我写的都是垃圾，就算所有东西都实现错误，那这些Safe代码底层调用的Unsafe代码也不会引发上一篇所提到的那一堆错误中的任何一个——只是程序会表现异常，比如你明明之前向BTreeMap插入了一个值，并且自始至终没有做任何删除，但之后就是找不到这个值）</p>
+<p>Unsafe Rust代码<strong>就是</strong>不能信任Safe Rust代码被正确地编写。<code>BTreeMap</code> 在没有全序的类型上运行会表现异常，不过绝对不会产生UB。Safe的承诺很实。</p>
 <p>你可能想问，如果 <code>BTreeMap</code> 不能相信 <code>Ord</code> （就因为它是Safe的）, 为什么它能相信其他 <em>任意</em> 的Safe代码？ 你看， <code>BTreeMap</code> 的实现不也依赖于整数和切片（slice）实现的正确性吗？这些不也都是Safe的吗？</p>
 <p>区别在于“范围（scope）”。当 <code>BTreeMap</code> 依赖于整数和切片的时候，它正依赖于非常独特而具体的实现。这个风险是可以估量的，并可与收益进行权衡。在这种情况下，我们反而没什么风险：如果整数或者切片这些在Rust里遍地都是的核心设施实现都有问题，那么 <em>一切</em> 都毁了，还写什么Rust程序啊。而且，维护整数和切片的人也在维护 <code>BTreeMap</code> （都是维护标准库的），因此密切监视以保证这些实现正确还算简单。</p>
 <p>同时， <code>BTreeMap</code> 的key类型是泛型参数。如果你信任其 <code>Ord</code> 实现，就相当于你信任过去、现在以及未来的所有 <code>Ord</code> 实现。这风险就大了：有人可能弄错了 <code>Ord</code> 实现，或者干脆撒谎骗过编译器，给他的根本不是全序的类型提供了个所谓 <code>Ord</code> 仅仅是因为“看起来好像能行”。 <code>BTreeMap</code> 得提前为这些情况做好准备。</p>
@@ -309,7 +316,7 @@ unsafe trait UnsafeOrd {
 <p>当你进行赋值、传参给函数或底层系统原语、从函数或底层系统原语返回值时，其实都在“生成”（produce）一个值。</p>
 <p>如果指针/引用是空的，或者它指向的内存区域空间不都是（或都不是）之前以某种方式被正确分配的，那么它就是悬空指针（译者注：Rust与C/C++对于悬空指针的定义完全一致；这里的描述多少有些学院派）。被指向的内存字节范围（span）的大小取决于指针的值，以及被指向类型的大小。因此，如果这个范围是空的，那么此时“悬空”与“非空”定义等价（译者注：如果被指向的类型大小为0，那这个指针理应是空的，否则它总归指向了不属于他的某个起始地址）。注意切片和字符串拥有它们所指向的范围下的全部空间，它们的长度（length）元数据不能过大。尤其是，它们都不能拥有比 <code>isize::MAX</code> 字节还大的内存。万一你真想要这么大，考虑使用裸指针管理它们吧。</p>
 <p>讲完了。这些就是Rust里UB的所有源头了。当然，unsafe函数和unsafe traits可以很自然地声明任意约束来要求程序去遵守它们，以避免UB。比如内存分配器API就明确写了：回收（deallocate）未被分配的（unallocated）内存是UB。</p>
-<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）</p>
+<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）。</p>
 <p>不过Rust允许一些奇怪的操作，而且不认为这些操作是 <code>unsafe</code> 的：</p>
 <ul>
 <li>死锁</li>
@@ -321,6 +328,97 @@ unsafe trait UnsafeOrd {
 <li>删库跑路</li>
 </ul>
 <p>当然了，能妥善处理如上所有问题的程序也 <em>可能</em> 是不正确的。Rust做了很多努力，提供了很多工具让这种事尽可能少发生，但终归无法杜绝。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="与unsafe共舞"><a class="header" href="#与unsafe共舞">与Unsafe共舞</a></h1>
+<p>Rust仅仅在很有限的范围让你编写Unsafe Rust，不过不要以为这时候你只需要考虑Unsafe部分就够了。考虑以下函数：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn index(idx: usize, arr: &amp;[u8]) -&gt; Option&lt;u8&gt; {
+    if idx &lt; arr.len() {
+        unsafe {
+            Some(*arr.get_unchecked(idex))
+        }
+    } else {
+        None
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这个函数即安全又正确。我们确保索引idx不越界，若不越界，我们就通过unsafe语句块获取数组的对应索引值。我们把这种通过Unsafe方式但又正确实现的函数称为 <em>sound</em> 的，意思是safe代码不会因为该函数产生UB（还记得吗，这是Safe Rust最基本的原则）。</p>
+<p>但就算这么普通的函数，unsafe块的范围也是个应该讨论的议题。如果把这个函数的 <code>&lt;</code> 换成 <code>&lt;=</code>：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn index(idx: usize, arr: &amp;[u8]) -&gt; Option&lt;u8&gt; {
+    if idx &lt;= arr.len() {
+        unsafe {
+            Some(*arr.get_unchecked(idx))
+        }
+    } else {
+        None
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这个程序目前就是 <code>unsound</code> 的了。Safe Rust也产生了UB，仅仅因为 <em>我们更改了Safe块的代码</em> 。这就是安全的基本问题：安全并不是局部的。Unsafe操作的soundness必须依赖于某些已经建立好的“Safe”操作状态。</p>
+<p>从某个角度来讲，安全是模块化的，因为切换到不安全模式并不要求你去费尽心思思考Unsafe所能引发的所有坏结果。举例来说，不检查越界地访问slice这件事绝对不需要你担心slice是不是null的，或者slice内包含了未初始化的内存——其他基本方面都没有改变。不过从另一个角度来讲，安全又 <em>不是</em> 模块化的，因为程序在内部是有状态的，你的Unsafe操作可能依赖于任意其他状态。</p>
+<p>当你不经意间打破一种持久的状态时，这种非模块化的糟糕之处就体现出来了。考虑一种 <code>Vec</code> 的简单实现：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::ptr;
+
+// 注意：严格来讲下面的定义过于简单（且有问题）。见后面“实现Vec”的章节。
+// 译者注：先不论下面提到的ZST（零size类型）问题。C/C++等语言可以这么实现，但Rust不行，因为
+// 这个结构没有表达出“Vec实际上存储并拥有一系列T值”的语义，在更复杂的调用中会引发生命周期问题
+// 而导致无法编译；至少在Vec中要加上`std::marker::PhantomData`标记。当然这还不是全部。读者
+// 若有兴趣，可以看一下标准库Vec的实现，其中涉及多层嵌套结构（借助零开销抽象）、永恒非空指针、
+// ZST等技术。
+pub struct Vec&lt;T&gt; {
+    ptr: *mut T,
+    len: usize,
+    cap: usize,
+}
+
+// 注意这个实现没有正确处理ZST。见后面“实现Vec”的章节。
+impl&lt;T&gt; Vec&lt;T&gt; {
+    pub fn push(&amp;mut self, elem: T) {
+        if self.len == self.cap {
+            // 尚未实现
+            self.reallocate();
+        }
+        unsafe {
+            ptr::write(self.ptr.add(len), elem);
+            self.len += 1;
+        }
+    }
+<span class="boring">    fn reallocate(&amp;mut self) { }
+</span>}
+
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>这些代码足够简单，想要形式化地验证它是正确的不算太难。现在考虑添加如下方法：</p>
+<!-- ignore: 简化后的代码 -->
+<pre><code class="language-rust ignore">fn make_room(&amp;mut self) {
+    // 增长Vec容量
+    self.cap += 1;
+}
+</code></pre>
+<p>这段代码是100%的Safe Rust，但也是100%的unsound。改变capacity违反了Vec的不变式（即， <code>cap</code> 反映的是Vec通过请求分配所得到的空间范围）。Vec本身无法确认它是否还能通过自增 <code>cap</code> 擅自吞下更多空间。Vec <em>必须</em> 无条件信任capacity域，因为我们没法通过别的方式验证它。</p>
+<p>因为它依赖于struct域提供的不变式， <code>unsafe</code> 代码不仅仅污染了整个函数，它还污染了 <em>整个模块</em> 。通常，限制Unsafe代码范围的唯一方式在于模块边界与私有性（privacy）。</p>
+<p>然而目前为止它们工作得 <em>很好</em>。 <code>make_room</code> 的存在 <em>不</em> 影响Vec的soundness，因为我们没有让它变成 <code>pub</code> 的。目前，只有定义了这个函数的模块才能调用它。另外， <code>make_room</code> 直接访问了Vec的私有域，所以它也只能被定义在与Vec相同的模块里。</p>
+<p>所以，我们可以基于一系列复杂的不变式来建立Safe的抽象。这对于维护Safe Rust和Unsafe Rust之间的关系 <em>至关重要</em> 。</p>
+<p>我们已经看到了，Unsafe代码必须信任 <em>一部分</em> Safe代码，但不该信任 <em>泛型</em> Safe代码（译者注：回忆之前介绍的 <code>Ord</code> 与 <code>BTreeMap</code> ）。私有性对于Unsafe代码也很重要，原因类似，因为私有性可以让我们没有必要担心“任何Safe代码都可能搞砸目前的稳定不变式”这种不可能的事情。</p>
+<p>一路顺风，注意安全！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rust中的数据布局"><a class="header" href="#rust中的数据布局">Rust中的数据布局</a></h1>
+<p>底层编程非常关注数据布局（data layout）。它非常重要。它也无处不在，影响着Rust的其它方面。因此，我们要好好研究一下Rust中的数据是如何表示（represented）的。</p>
+<p>理想情况下，本章与 <a href="https://doc.rust-lang.org/reference/type-layout.html">《The Reference》中的类型布局小节</a> 一致，而且是多余的。这本书刚开写的时候，《The Reference》完全处于失修的状态，那时本书的定位仅仅是《The Reference》的部分替代。现在不一样了，所以本章实际上可以被删除了。</p>
+<p>我们会再保留本章更长一段时间，但如果需要的话，你应在那本书里贡献新内容。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="reprrust"><a class="header" href="#reprrust">repr(Rust)</a></h1>
+<p>尚未完成，正在翻译，敬请期待！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="不定长类型"><a class="header" href="#不定长类型">不定长类型</a></h1>
+<p>尚未完成，正在翻译，敬请期待！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="其它repr"><a class="header" href="#其它repr">其它repr</a></h1>
+<p>尚未完成，正在翻译，敬请期待！</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="所有权"><a class="header" href="#所有权">所有权</a></h1>
+<p>尚未完成，正在翻译，敬请期待！</p>
 
                     </main>
 

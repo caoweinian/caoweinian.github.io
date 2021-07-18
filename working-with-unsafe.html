@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>遇见Safe与Unsafe - Rust死灵书</title>
+        <title>与Unsafe共舞 - Rust死灵书</title>
         <!-- Custom HTML head -->
         
 
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html" class="active"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html" class="active"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -140,37 +140,94 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="遇见safe与unsafe"><a class="header" href="#遇见safe与unsafe">遇见Safe与Unsafe</a></h1>
-<p><img src="img/safeandunsafe.svg" alt="safe and unsafe" /></p>
-<p>不用关心底层实现细节可真太幸福了。谁会关心一个空元组占用多少内存空间呢？很不幸，有时它真的很重要，这时我们不得不去了解它。如果你开始关心实现细节了，最常见的原因就是你希望程序性能得到提升。不过更重要的是，当直面硬件、操作系统或其他编程语言这些底层的东西时，这些细节可能影响程序的正确性！</p>
-<p>当实现细节在一个safe的编程语言里变得很重要时，程序员通常有三条路可选：</p>
-<ul>
-<li>修改你的代码以使编译期/runtime更好地执行代码优化策略</li>
-<li>硬着头皮上，去采用更加单一或更加繁琐的设计来实现</li>
-<li>用另一种能够处理这些繁琐细节的编程语言重新实现你想要的一切</li>
-</ul>
-<p>对于最后那一个选项，程序员会倾向于使用<em>C语言</em>。对于只对外声明了C语言函数接口的系统，程序员与该系统交互也几乎必须使用C语言。</p>
-<p>不幸的是，使用C语言是非常非常非常危险的（不否认，有时你使用它是有充分理由的），这种不安在你想要和另一个语言进行互操作的时候会更加被放大。你必须小心仔细，去保证C语言和其他语言遵循了什么样的调用约定，而且他们之间不会互相使绊子埋雷。</p>
-<p>这和Rust有什么关系？</p>
-<p>怎么说呢，与C语言不同，Rust是一门安全（safe）的编程语言。</p>
-<p>不过，与C语言类似，Rust也是一门不安全（unsafe）的编程语言。</p>
-<p>更准确一点，Rust <em>包含</em> 了安全（safe）与不安全（unsafe）编程语言。</p>
-<p>Rust可以被认为是 <em>Safe Rust</em> 和 <em>Unsafe Rust</em> 两者的结合体。顾名思义：Safe Rust是安全的，Unsafe Rust是，唔，不安全的。事实上，Unsafe Rust允许我们做一些 <em>真心</em> 很不安全的事请。Rust的创造者们再三告诉你山有猛虎，奈何这本书的内容本身就是教你如何向山而行。</p>
-<p>Safe Rust是 <em>真正的</em> Rust语言。如果你只使用了Safe Rust部分，你就永远不用担心类型安全（type-safety）或内存安全（memory-safety）问题。你也完全不用担心悬垂指针（dangling pointer）、释放后使用（use-after-free），或者任何其他UB。</p>
-<p>标准库给了你很多足够的现成工具让你能以最习惯方式通过Safe Rust编写高性能应用和库。</p>
-<p>但你可能想要这个语言的另一面。也许你在写一个不暴露给标准库的低级抽象。也许你在写标准库<em>本身</em>（它全部由Rust编写）。也许你想要做一些类型系统（type-system）不理解的事，弄些古灵精怪的东西。也许……你需要Unsafe Rust。</p>
-<p>Unsafe Rust和Safe Rust共享同样的语法规则和语义规则。而前者只是能让你多做一些 <em>其他</em> 事。这些事 <strong>非 常 危 险</strong> （我们会在下一小节中定义这些概念）。</p>
-<p>把两者分开的价值在于，我们受益于使用像C语言这样虽不安全却又能获得实现细节上的底层次控制，但又避免了由再使用另一门完全不同的安全编程语言而滋生的所有问题。</p>
-<p>还有一些问题——最明显的是，我们必须留意类型系统在属性（properties）中作出的所有假设，并且在与Unsafe Rust交互的时候时刻记着它们。这就是本书的目的：告诉你这些假设是什么，以及怎么处理它们。</p>
+                        <h1 id="与unsafe共舞"><a class="header" href="#与unsafe共舞">与Unsafe共舞</a></h1>
+<p>Rust仅仅在很有限的范围让你编写Unsafe Rust，不过不要以为这时候你只需要考虑Unsafe部分就够了。考虑以下函数：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn index(idx: usize, arr: &amp;[u8]) -&gt; Option&lt;u8&gt; {
+    if idx &lt; arr.len() {
+        unsafe {
+            Some(*arr.get_unchecked(idex))
+        }
+    } else {
+        None
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这个函数即安全又正确。我们确保索引idx不越界，若不越界，我们就通过unsafe语句块获取数组的对应索引值。我们把这种通过Unsafe方式但又正确实现的函数称为 <em>sound</em> 的，意思是safe代码不会因为该函数产生UB（还记得吗，这是Safe Rust最基本的原则）。</p>
+<p>但就算这么普通的函数，unsafe块的范围也是个应该讨论的议题。如果把这个函数的 <code>&lt;</code> 换成 <code>&lt;=</code>：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn index(idx: usize, arr: &amp;[u8]) -&gt; Option&lt;u8&gt; {
+    if idx &lt;= arr.len() {
+        unsafe {
+            Some(*arr.get_unchecked(idx))
+        }
+    } else {
+        None
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这个程序目前就是 <code>unsound</code> 的了。Safe Rust也产生了UB，仅仅因为 <em>我们更改了Safe块的代码</em> 。这就是安全的基本问题：安全并不是局部的。Unsafe操作的soundness必须依赖于某些已经建立好的“Safe”操作状态。</p>
+<p>从某个角度来讲，安全是模块化的，因为切换到不安全模式并不要求你去费尽心思思考Unsafe所能引发的所有坏结果。举例来说，不检查越界地访问slice这件事绝对不需要你担心slice是不是null的，或者slice内包含了未初始化的内存——其他基本方面都没有改变。不过从另一个角度来讲，安全又 <em>不是</em> 模块化的，因为程序在内部是有状态的，你的Unsafe操作可能依赖于任意其他状态。</p>
+<p>当你不经意间打破一种持久的状态时，这种非模块化的糟糕之处就体现出来了。考虑一种 <code>Vec</code> 的简单实现：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::ptr;
+
+// 注意：严格来讲下面的定义过于简单（且有问题）。见后面“实现Vec”的章节。
+// 译者注：先不论下面提到的ZST（零size类型）问题。C/C++等语言可以这么实现，但Rust不行，因为
+// 这个结构没有表达出“Vec实际上存储并拥有一系列T值”的语义，在更复杂的调用中会引发生命周期问题
+// 而导致无法编译；至少在Vec中要加上`std::marker::PhantomData`标记。当然这还不是全部。读者
+// 若有兴趣，可以看一下标准库Vec的实现，其中涉及多层嵌套结构（借助零开销抽象）、永恒非空指针、
+// ZST等技术。
+pub struct Vec&lt;T&gt; {
+    ptr: *mut T,
+    len: usize,
+    cap: usize,
+}
+
+// 注意这个实现没有正确处理ZST。见后面“实现Vec”的章节。
+impl&lt;T&gt; Vec&lt;T&gt; {
+    pub fn push(&amp;mut self, elem: T) {
+        if self.len == self.cap {
+            // 尚未实现
+            self.reallocate();
+        }
+        unsafe {
+            ptr::write(self.ptr.add(len), elem);
+            self.len += 1;
+        }
+    }
+<span class="boring">    fn reallocate(&amp;mut self) { }
+</span>}
+
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>这些代码足够简单，想要形式化地验证它是正确的不算太难。现在考虑添加如下方法：</p>
+<!-- ignore: 简化后的代码 -->
+<pre><code class="language-rust ignore">fn make_room(&amp;mut self) {
+    // 增长Vec容量
+    self.cap += 1;
+}
+</code></pre>
+<p>这段代码是100%的Safe Rust，但也是100%的unsound。改变capacity违反了Vec的不变式（即， <code>cap</code> 反映的是Vec通过请求分配所得到的空间范围）。Vec本身无法确认它是否还能通过自增 <code>cap</code> 擅自吞下更多空间。Vec <em>必须</em> 无条件信任capacity域，因为我们没法通过别的方式验证它。</p>
+<p>因为它依赖于struct域提供的不变式， <code>unsafe</code> 代码不仅仅污染了整个函数，它还污染了 <em>整个模块</em> 。通常，限制Unsafe代码范围的唯一方式在于模块边界与私有性（privacy）。</p>
+<p>然而目前为止它们工作得 <em>很好</em>。 <code>make_room</code> 的存在 <em>不</em> 影响Vec的soundness，因为我们没有让它变成 <code>pub</code> 的。目前，只有定义了这个函数的模块才能调用它。另外， <code>make_room</code> 直接访问了Vec的私有域，所以它也只能被定义在与Vec相同的模块里。</p>
+<p>所以，我们可以基于一系列复杂的不变式来建立Safe的抽象。这对于维护Safe Rust和Unsafe Rust之间的关系 <em>至关重要</em> 。</p>
+<p>我们已经看到了，Unsafe代码必须信任 <em>一部分</em> Safe代码，但不该信任 <em>泛型</em> Safe代码（译者注：回忆之前介绍的 <code>Ord</code> 与 <code>BTreeMap</code> ）。私有性对于Unsafe代码也很重要，原因类似，因为私有性可以让我们没有必要担心“任何Safe代码都可能搞砸目前的稳定不变式”这种不可能的事情。</p>
+<p>一路顺风，注意安全！</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="author.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="what-unsafe-does.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="safe-unsafe-meaning.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="data.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -179,10 +236,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="author.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="what-unsafe-does.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="safe-unsafe-meaning.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="data.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

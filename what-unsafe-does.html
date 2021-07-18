@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Unsafe能做什么 - Rust魔法书</title>
+        <title>Unsafe能做什么 - Rust死灵书</title>
         <!-- Custom HTML head -->
         
 
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html" class="active"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html" class="active"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -110,7 +110,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust魔法书</h1>
+                    <h1 class="menu-title">Rust死灵书</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -179,7 +179,7 @@
 <p>当你进行赋值、传参给函数或底层系统原语、从函数或底层系统原语返回值时，其实都在“生成”（produce）一个值。</p>
 <p>如果指针/引用是空的，或者它指向的内存区域空间不都是（或都不是）之前以某种方式被正确分配的，那么它就是悬空指针（译者注：Rust与C/C++对于悬空指针的定义完全一致；这里的描述多少有些学院派）。被指向的内存字节范围（span）的大小取决于指针的值，以及被指向类型的大小。因此，如果这个范围是空的，那么此时“悬空”与“非空”定义等价（译者注：如果被指向的类型大小为0，那这个指针理应是空的，否则它总归指向了不属于他的某个起始地址）。注意切片和字符串拥有它们所指向的范围下的全部空间，它们的长度（length）元数据不能过大。尤其是，它们都不能拥有比 <code>isize::MAX</code> 字节还大的内存。万一你真想要这么大，考虑使用裸指针管理它们吧。</p>
 <p>讲完了。这些就是Rust里UB的所有源头了。当然，unsafe函数和unsafe traits可以很自然地声明任意约束来要求程序去遵守它们，以避免UB。比如内存分配器API就明确写了：回收（deallocate）未被分配的（unallocated）内存是UB。</p>
-<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）</p>
+<p>然而，违背这些约束会直接或间接地引发如上所述的问题。编译器内部搞了一些更激进的黑魔法来保证代码可以怎么被优化。比如，编译器对Vec和Box有更激进的优化，因为它知道，这些结构内部的指针必定非空（译者注：可以理解为它们的二进制序列绝对不会有全零这个非法表示）。</p>
 <p>不过Rust允许一些奇怪的操作，而且不认为这些操作是 <code>unsafe</code> 的：</p>
 <ul>
 <li>死锁</li>
@@ -199,6 +199,9 @@
                             <a rel="prev" href="safe-unsafe-meaning.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+                            <a rel="next" href="working-with-unsafe.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         <div style="clear: both"></div>
                     </nav>
                 </div>
@@ -207,6 +210,9 @@
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                     <a rel="prev" href="safe-unsafe-meaning.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="working-with-unsafe.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 

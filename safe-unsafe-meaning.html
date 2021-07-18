@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Safe与Unsafe如何交互 - Rust魔法书</title>
+        <title>Safe与Unsafe如何交互 - Rust死灵书</title>
         <!-- Custom HTML head -->
         
 
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html" class="active"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -110,7 +110,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust魔法书</h1>
+                    <h1 class="menu-title">Rust死灵书</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -151,7 +151,7 @@
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>, 它在索引时不进行越界检查，这么做就可能导致内存安全（memory-safety）被轻易违反。</li>
 <li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a> 将一个值解释为另一个给定的类型，从而以任意方式轻松绕过类型安全（type safety）（细节见 <a href="err/not-implemented-yet.html">conversions</a>）。</li>
-<li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发未定义行为（Undefined Behavior）。</li>
+<li>所有指向具有确定大小结构（译者注：此“结构”是广义的，不仅指struct）的指针都有一个 <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a> 方法，如果你传递给该函数的偏移（offset）越界，则会引发UB。</li>
 <li>所有的FFI（Foreign Function Interface，外部函数接口）函数都是 <code>unsafe</code> 的，因为其他的编程语言所做的事到底安不安全，Rust没法检查。</li>
 </ul>
 <p>Rust发布1.29.2版本时，标准库有定义下列unsafe traits（当然不仅限于下面这几个，不过其他的都尚未进入stable分支，而且其中有一些可能永远不会进入stable）：</p>
@@ -162,11 +162,11 @@
 </ul>
 <p>Rust标准库里有很多地方内部使用了Unsafe Rust。这些实现经过了严格的人工检查，因此基于这些不安全实现的Safe Rust接口可以被认为是安全的。</p>
 <p>所有这些分离的需求都最终归结为一个Safe Rust的基本性质，即 <em>正确性</em>：</p>
-<p><strong>无论如何，Safe Rust永远不会产生未定义行为（Undefined Behavior）。</strong></p>
+<p><strong>无论如何，Safe Rust永远不会产生UB。</strong></p>
 <p>Rust中安全与不安全互相分割的设计，其中暗含着它们之间存在“不对称信任”：Safe Rust必须相信它所直接接触的Unsafe Rust被正确地编写，而另一方面，Unsafe Rust在信任Safe Rust这一方面却总是如履薄冰。</p>
 <p>举个例子，Rust有 <a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a> 和 <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> traits，它们来区别那些能部分被比较的类型，以及那些提供了全序（total）的类型，后者意味着其比较表现是很合理的。</p>
-<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a> 对于只提供了偏序的类型没有意义，它要求比较键（key）实现了 <code>Ord</code> （译者注：即全序）。然而， <code>BTreeMap</code> 的内部实现有Unsafe Rust代码。因为我们无法接受让一个错误的 <code>Ord</code> 实现引发未定义行为——毕竟我们只是在写Safe Rust（译者注：抬头再看一眼上面的粗体字！并且注意， <code>Ord</code> 是Safe trait）——那么BTreeMap里的Unsafe代码必须要非常健壮（robust），以使它针对错误的（即实质上并非全序的） <code>Ord</code> 实现，也不能产生未定义行为。（译者注：这一段有点绕，但其中的逻辑并不复杂，即，只要我一直在写Safe代码，就算我写的都是垃圾，就算所有东西都实现错误，那这些Safe代码底层调用的Unsafe代码也不会引发上一篇所提到的那一堆错误中的任何一个——只是程序会表现异常，比如你明明之前向BTreeMap插入了一个值，并且自始至终没有做任何删除，但之后就是找不到这个值）</p>
-<p>Unsafe Rust代码<strong>就是</strong>不能信任Safe Rust代码被正确地编写。<code>BTreeMap</code> 在没有全序的类型上运行会表现异常，不过绝对不会产生未定义行为。Safe的承诺很实。</p>
+<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a> 对于只提供了偏序的类型没有意义，它要求比较键（key）实现了 <code>Ord</code> （译者注：即全序）。然而， <code>BTreeMap</code> 的内部实现有Unsafe Rust代码。因为我们无法接受让一个错误的 <code>Ord</code> 实现引发UB——毕竟我们只是在写Safe Rust（译者注：抬头再看一眼上面的粗体字！并且注意， <code>Ord</code> 是Safe trait）——那么BTreeMap里的Unsafe代码必须要非常健壮（robust），以使它针对错误的（即实质上并非全序的） <code>Ord</code> 实现，也不能产生Ub。（译者注：这一段有点绕，但其中的逻辑并不复杂，即，只要我一直在写Safe代码，就算我写的都是垃圾，就算所有东西都实现错误，那这些Safe代码底层调用的Unsafe代码也不会引发上一篇所提到的那一堆错误中的任何一个——只是程序会表现异常，比如你明明之前向BTreeMap插入了一个值，并且自始至终没有做任何删除，但之后就是找不到这个值）</p>
+<p>Unsafe Rust代码<strong>就是</strong>不能信任Safe Rust代码被正确地编写。<code>BTreeMap</code> 在没有全序的类型上运行会表现异常，不过绝对不会产生UB。Safe的承诺很实。</p>
 <p>你可能想问，如果 <code>BTreeMap</code> 不能相信 <code>Ord</code> （就因为它是Safe的）, 为什么它能相信其他 <em>任意</em> 的Safe代码？ 你看， <code>BTreeMap</code> 的实现不也依赖于整数和切片（slice）实现的正确性吗？这些不也都是Safe的吗？</p>
 <p>区别在于“范围（scope）”。当 <code>BTreeMap</code> 依赖于整数和切片的时候，它正依赖于非常独特而具体的实现。这个风险是可以估量的，并可与收益进行权衡。在这种情况下，我们反而没什么风险：如果整数或者切片这些在Rust里遍地都是的核心设施实现都有问题，那么 <em>一切</em> 都毁了，还写什么Rust程序啊。而且，维护整数和切片的人也在维护 <code>BTreeMap</code> （都是维护标准库的），因此密切监视以保证这些实现正确还算简单。</p>
 <p>同时， <code>BTreeMap</code> 的key类型是泛型参数。如果你信任其 <code>Ord</code> 实现，就相当于你信任过去、现在以及未来的所有 <code>Ord</code> 实现。这风险就大了：有人可能弄错了 <code>Ord</code> 实现，或者干脆撒谎骗过编译器，给他的根本不是全序的类型提供了个所谓 <code>Ord</code> 仅仅是因为“看起来好像能行”。 <code>BTreeMap</code> 得提前为这些情况做好准备。</p>

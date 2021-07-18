@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>作者有话说 - Rust魔法书</title>
+        <title>译者写在开头的话 - Rust死灵书</title>
         <!-- Custom HTML head -->
         
 
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html" class="active">作者有话说</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">导论</a></li><li class="chapter-item expanded affix "><a href="author.html" class="active">译者写在开头的话</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 遇见Safe与Unsafe</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> Safe与Unsafe如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 与Unsafe共舞</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> 数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 不定长类型</a></li><li class="chapter-item expanded "><a href="other-types.html"><strong aria-hidden="true">2.3.</strong> 其它repr</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -110,7 +110,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust魔法书</h1>
+                    <h1 class="menu-title">Rust死灵书</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -140,19 +140,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="作者有话说"><a class="header" href="#作者有话说">作者有话说</a></h1>
+                        <h1 id="译者写在开头的话"><a class="header" href="#译者写在开头的话">译者写在开头的话</a></h1>
 <h2 id="关于原项目"><a class="header" href="#关于原项目">关于原项目</a></h2>
 <p>若想要参考原书内容，请见 <a href="https://github.com/rust-lang/nomicon">《The Rustonomicon》</a> 。</p>
 <h2 id="关于本项目"><a class="header" href="#关于本项目">关于本项目</a></h2>
-<p>该项目是《The Rustonomicon》的非官方简体中文翻译，系个人项目，目前仍在按原书顺序翻译中，预计翻译速度为一到三天翻译一小节（不承诺）。截至2021年7月14日，我仍未在互联网上看到关于《The Rustonomicon》的完整翻译（有部分翻译的），我也学习Rust两年有余了，希望借此机会更深一步。机缘凑巧，我想通过翻译官方书籍的方式来降低大家学习Rust的门槛。</p>
-<p>囿于理解能力和翻译能力，该项目的不保证准确地传达该书的思想。读者可在阅读时同时准备英文版原书作阅读比对。</p>
+<p>该项目是《The Rustonomicon》的非官方简体中文翻译，系个人项目，目前仍在按原书顺序翻译中，预计翻译速度为一到三天翻译一小节（不保证）。</p>
+<p>在翻译完本书（也即快速原型周期）之前，每一次push都会伴随着一节新内容，或对目前已发现的bug的修复。在这个周期中，每一次commit的message都是严格的“semver 2.0字符串X”，其中主、次版本号均为0，修订号每次递增；X是可选内容，为一个英文冒号加一个英文空格加bug修复内容。当全书翻译完毕一周后，本书将进入v0.1.0。</p>
+<p>截至2021年7月14日，我未在互联网上看到关于《The Rustonomicon》的完整翻译（有部分翻译的），我学习Rust两年有余了，希望借此机会更深一步。机缘凑巧，我想通过翻译官方书籍的方式来降低大家学习Rust的门槛。</p>
+<p>囿于理解能力和翻译能力，该项目的不保证准确地传达该书的思想。读者可在阅读时同时准备英文版原书作阅读比对。另外，本书是不稳定的，比如第二章很可能在之后的版本中被删除（因为《The Reference》已有对应完整的介绍了），本书可能滞后于实际的版本。</p>
 <p>热切希望大家能对本项目作出贡献。</p>
 <h2 id="翻译"><a class="header" href="#翻译">翻译</a></h2>
 <h3 id="翻译风格"><a class="header" href="#翻译风格">翻译风格</a></h3>
 <ul>
 <li>不将代码、函数翻译成中文</li>
+<li>不翻译编译器输出</li>
 <li>会翻译代码中的所有注释</li>
-<li>因为“unsafe”是Rust的关键字，而且它的语义与中文的“不安全”有很大差别，当原文指unsafe关键字或指由该关键字所直接引申出的unsafe概念时，我们会保留英文。特别地，在后面那一种情况里，我会将unsafe大写成Unsafe。另外，我会将英文概念的“unsafe”翻译成“危险”或类似的非否定词语，不会翻译成“不安全”。</li>
+<li>因为“unsafe”是Rust的关键字，而且它的语义与中文的“不安全”有很大差别，当原文指unsafe关键字或指由该关键字所直接引申出的unsafe概念时，我们会保留英文。特别地，在后面那一种情况里，我会将unsafe大写成Unsafe。</li>
 <li>把文字逐句逐词的原意、通俗易懂作为共同目标。因为个人翻译水平有限，当两者存在冲突时，我会优先以后者为目的。</li>
 <li>不排除行文中有使用互联网（亚）文化梗行为的存在，但保证若出现，绝不会让不懂该梗出处的读者感到不适与费解；梗将会被很自然地嵌入。</li>
 <li>在设身处地重新阅读一遍翻译过来的中文后，如果我觉得这段文字有些费解，我可能会在其中加入“括弧——译者注”。</li>
@@ -161,19 +164,23 @@
 <li>对于大部分计算机科学术语，会在第一次遇到时顺带给出原英文；在第二次及以后的出场中<em>可能</em>给出英文。</li>
 </ul>
 <h3 id="中英文非精准对照表"><a class="header" href="#中英文非精准对照表">中英文（非精准）对照表</a></h3>
-<p>reference——引用
-Undefined Behavior——未定义行为（或UB）
-compiler intrinsic——编译器黑魔法（注：我称之为黑魔法是因为他与C++某些功能，如std::base_of这种无法通过语言本身来实现的功能相似，只由编译器调用，而在C++那个圈子，就经常称之为黑魔法）
-dangling pointer——悬空指针
-unaligned——未对齐的
-unwind——（栈）展开
-data race——数据竞争
-primitive——基础类型或原语（前者是编程语言里的概念，后者是操作系统或硬件概念；当原文出现primitive时，有充分信息判断该词指代哪一个意思）
-metadata——元数据
-pointee——被指针所指向的数据
-slice——切片（一般它指std::slice的相关概念）
-deallocate——回收（以传统C为例，内存的使用本质上要经过四步走“allocate-initialize-destroy-deallocate”。读者要分清destroy和deallocate的区别，前者是在原地析构对象，以使这段内存可以<em>接下来</em>直接被归还到堆内存且不会产生memory leak，后一步才是真正的归还操作。这些概念在Rust同样适用）
-destructor——析构函数</p>
+<ul>
+<li>reference——引用</li>
+<li>pointer——指针</li>
+<li>dangling pointer——悬空指针</li>
+<li>pointee——被指针所指向的数据</li>
+<li>Undefined Behavior——未定义行为（或UB）</li>
+<li>compiler intrinsic——编译器黑魔法（注：我称之为黑魔法是因为他与C++某些功能，如std::base_of这种无法通过语言本身来实现的功能相似，只由编译器了解并调用。C++那个圈子经常称之为黑魔法）</li>
+<li>unaligned——未对齐的</li>
+<li>unwind——（栈）展开</li>
+<li>data race——数据竞争</li>
+<li>primitive——基础类型或原语（前者是编程语言里的概念，后者是操作系统或硬件概念；当原文出现primitive时，有充分信息判断该词指代哪一个意思）</li>
+<li>metadata——元数据</li>
+<li>slice——切片（一般它指std::slice的相关概念）</li>
+<li>deallocate——回收（以传统C为例，内存的使用本质上要经过四步走“allocate-initialize-destroy-deallocate”。读者要分清destroy和deallocate的区别，前者是在原地析构对象，以使这段内存可以<em>接下来</em>直接被归还到堆内存且不会产生memory leak，后一步才是真正的归还操作。这些概念在Rust同样适用）</li>
+<li>destructor——析构函数</li>
+<li>data layout——数据布局</li>
+</ul>
 <h3 id="保留对照表"><a class="header" href="#保留对照表">保留对照表</a></h3>
 <p>有些英文的中文翻译反而会失去其内涵，本书选择保留原文：</p>
 <ul>
